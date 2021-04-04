@@ -1,0 +1,49 @@
+.board {
+		display: grid;
+		grid-template-rows: repeat(3, 1fr);
+		grid-template-columns: repeat(3, 1fr);
+		width: 90vmin;
+		height: 90vmin;
+		border: 1.5vmin solid #000;
+		border-radius: 15px;
+		
+}
+.cell {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: calc(90vmin / 3);
+		height: calc(90vmin / 3);
+		border: 1.5vmin solid #000;
+		box-sizing: border-box;
+
+}
+
+.oMove {
+		width: calc(70vmin / 3);
+		height: calc(70vmin / 3);
+		border: 4vmin solid #000;
+		box-sizing: border-box;
+		border-radius: 50%;
+
+}
+
+.xMove {
+		width: calc(70vmin /3);
+		height: calc(70vmin / 3);
+		background: linear-gradient(to top left,
+		rgba(0,0,0,0) 0%,
+		rgba(0,0,0,0) 0%,
+		rgba(0,0,0,0) 44%,
+		rgba(0,0,0,1) 44%,
+		rgba(0,0,0,1) 56%,
+		rgba(0,0,0,0) 56%,
+		rgba(0,0,0,0) 100%),
+		linear-gradient(to top right,
+		rgba(0,0,0,0) 0%,
+		rgba(0,0,0,0) 44%,
+		rgba(0,0,0,1) 44%,
+		rgba(0,0,0,1) 56%,
+		rgba(0,0,0,0) 56%,
+		rgba(0,0,0,0) 100%);
+}
