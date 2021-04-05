@@ -22,6 +22,8 @@ function playX() {
 }
 
 // Game logic
+
+// Create the game board
 const Gameboard = () => {
   const board = [];
   for (let i = 0; i < 3; i++) {
@@ -45,6 +47,7 @@ const Gameboard = () => {
 
 const currentBoard = Gameboard();
 
+// Function to create player and computer opponent
 const createPlayers = (playerName) => {
   function newPlayer(name, token) {
     this.name = name;
@@ -55,7 +58,19 @@ const createPlayers = (playerName) => {
   return { player: player, computer: computer };
 };
 
+const availableMove = () => {
+  function containsOnly(array1, array2) {
+    return array2.every((elem) => array1.includes(elem));
+  }
+  return (
+    containsOnly(["X", "O"], currentBoard[0]) &&
+    containsOnly(["X", "O"], currentBoard[1]) &&
+    containsOnly(["X", "O"], currentBoard[2])
+  );
+};
+// Main game function.
 const playGame = (() => {
+  let whoseTurn = "P";
   const players = createPlayers("Linus");
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
@@ -64,18 +79,36 @@ const playGame = (() => {
 										currentBoard[i][j] !== 'X') {
 												currentBoard[i][j] = 'X';
 												box${i}${j}.appendChild(playX());
+												if (!availableMove()) {
+												whoseTurn = 'C';
+												computerMove();
+												}
 								}
 						})`);
     }
   }
-  //test
+  const computerMove = () => {
+    while (whoseTurn === "C") {
+      const xCoord = Math.floor(Math.random() * 3);
+      const yCoord = Math.floor(Math.random() * 3);
+      if (
+        currentBoard[xCoord][yCoord] !== "O" &&
+        currentBoard[xCoord][yCoord] !== "X"
+      ) {
+        currentBoard[xCoord][yCoord] = "O";
+        eval(`box${xCoord}${yCoord}.appendChild(playO());`);
+        whoseTurn = "P";
+      }
+    }
+    //test
+  };
   currentBoard[1][0] = players.player.token;
   box10.appendChild(playX());
   currentBoard[1][1] = players.computer.token;
   box11.appendChild(playO());
-  console.log(players.player.name, players.player.token);
-  console.log(players.computer.name, players.computer.token);
-  console.log(currentBoard);
-  console.log(typeof currentBoard);
-  // test end
+  //console.log(players.player.name, players.player.token);
+  //console.log(players.computer.name, players.computer.token);
+  //console.log(currentBoard);
+  //console.log(typeof currentBoard);
+  //// test end
 })();
