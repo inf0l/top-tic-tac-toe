@@ -1,9 +1,11 @@
 // HTML
 const html = document.querySelector("html");
+const head = document.querySelector("head");
+const body = document.querySelector("body");
 const style = document.createElement("link");
 style.rel = "stylesheet";
 style.href = "./css/style.css";
-html.appendChild(style);
+head.appendChild(style);
 const container = document.querySelector("#container");
 const fullBoard = document.createElement("div");
 fullBoard.className = "board";
@@ -76,19 +78,19 @@ const playGame = (() => {
   const players = createPlayers("Linus");
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) {
-      eval(`box${i}${j}.addEventListener("click", () => {
-								if (currentBoard[i][j] !== 'O' &&
-										currentBoard[i][j] !== 'X') {
-												currentBoard[i][j] = 'X';
-												box${i}${j}.appendChild(playX());
-												winCondition();
-												if (!availableMove()) {
-												whoseTurn = 'C';
-												computerMove();
-												}
-								}
-						})`);
-    }
+	    eval(`box${i}${j}.addEventListener("click", () => {
+				if (currentBoard[i][j] !== 'O' &&
+				currentBoard[i][j] !== 'X') {
+					currentBoard[i][j] = 'X';
+					box${i}${j}.appendChild(playX());
+					winCondition();
+					if (!availableMove()) {
+						whoseTurn = 'C';
+						computerMove();
+					}
+				}
+			})`);
+		}
   }
 
   const computerMove = () => {
@@ -127,22 +129,25 @@ function winCondition() {
 
   if (
     currentBoard[0].every((x) => x == "X") ||
-    currentBoard[0].every((x) => x == "O") ||
     currentBoard[1].every((x) => x == "X") ||
-    currentBoard[1].every((x) => x == "O") ||
     currentBoard[2].every((x) => x == "X") ||
-    currentBoard[2].every((x) => x == "O") ||
     transposedBoard[0].every((x) => x == "X") ||
-    transposedBoard[0].every((x) => x == "O") ||
     transposedBoard[1].every((x) => x == "X") ||
-    transposedBoard[1].every((x) => x == "O") ||
     transposedBoard[2].every((x) => x == "X") ||
-    transposedBoard[2].every((x) => x == "O") ||
     diagonalOne.every((x) => x == "X") ||
+    diagonalTwo.every((x) => x == "X") 
+  ) {
+		console.log("Player Wins");
+		} else if (
+    currentBoard[0].every((x) => x == "O") ||
+    currentBoard[1].every((x) => x == "O") ||
+    currentBoard[2].every((x) => x == "O") ||
+    transposedBoard[0].every((x) => x == "O") ||
+    transposedBoard[1].every((x) => x == "O") ||
+    transposedBoard[2].every((x) => x == "O") ||
     diagonalOne.every((x) => x == "O") ||
-    diagonalTwo.every((x) => x == "X") ||
     diagonalTwo.every((x) => x == "O")
   ) {
-    console.log("Win");
+    console.log("Computer Wins");
   }
 }
